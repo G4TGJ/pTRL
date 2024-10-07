@@ -21,6 +21,9 @@
 #include "hardware/sync.h"
 #include "config.h"
 
+// Disabled if we have an external I2C EEPROM
+#ifndef EEPROM_I2C_ADDRESS
+
 // The EEPROM size is configured in config.h
 // Check it isn't too large. An address of 0xFF means the flash
 // is empty so can only have up to 254 bytes.
@@ -198,3 +201,4 @@ void eepromWrite(uint16_t uiAddress, uint8_t ucData)
         }
     }
 }
+#endif

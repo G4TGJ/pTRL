@@ -2,10 +2,12 @@ add_library(pTRL INTERFACE)
 
 target_sources(pTRL INTERFACE
     eeprom.c
+    eeprom_i2c.c
     i2c.c
     millis.c
     millis.h
     serial.c
+    ssd1306_i2c.c
 )
 
 target_include_directories(pTRL INTERFACE . ${CMAKE_SOURCE_DIR})
