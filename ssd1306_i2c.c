@@ -392,7 +392,7 @@ void oledInit() {
 #endif
         /* timing and driving scheme */
         SSD1306_SET_DISP_CLK_DIV,       // set display clock divide ratio
-        0x80,                           // div ratio of 1, standard freq
+        0x00,                           // div ratio of 1, lowest freq
         SSD1306_SET_PRECHARGE,          // set pre-charge period
         0xF1,                           // Vcc internally generated on our board
         SSD1306_SET_VCOM_DESEL,         // set VCOMH deselect level
