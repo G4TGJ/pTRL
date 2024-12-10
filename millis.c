@@ -10,5 +10,5 @@ void millisInit()
 // Return the current millisecond tick count
 uint32_t millis ()
 {
-    return time_us_32() / 1000;
+    return time_us_64() / 1000;
 }
