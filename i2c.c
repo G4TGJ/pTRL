@@ -61,6 +61,20 @@ uint8_t i2cWriteRegister(uint8_t i2cAddr, uint8_t regAddr, uint8_t data)
     return 0;
 }
 
+// Write to a 9 bit register
+// First byte written contains the reg address shifted left one bit
+// plus bit 8 of data.
+// Second byte written contains the remaining 8 bits of the data
+uint8_t i2cWriteRegister9Bit(uint8_t i2cAddr, uint8_t regAddr, uint16_t data)
+{
+    uint8_t buf[2];
+    buf[0] = (regAddr << 1) | (data>>8);
+    buf[1] = data & 0xFF;
+    i2c_write_blocking(i2c_default, i2cAddr, buf, 2, false);
+
+    return 0;
+}
+
 uint8_t i2cReadRegister(uint8_t i2cAddr, uint8_t regAddr, uint8_t *data)
 {
     i2c_write_blocking(i2c_default, i2cAddr, &regAddr, 1, true);
