@@ -167,13 +167,14 @@ void SSD1306_scroll(bool on) {
 
 static void render(uint8_t *buf, struct render_area *area)
 {
+#if 0
         printf("Rendering col %d to %d page %d to %d\n",
             area->start_col,
             area->end_col,
             area->start_page,
             area->end_page
         );
-
+#endif
     // update a portion of the display with a render area
     uint8_t cmds[] = {
         SSD1306_SET_COL_ADDR,
