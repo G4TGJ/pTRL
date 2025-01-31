@@ -7,7 +7,6 @@
  * Author : Richard Tomlinson G4TGJ
  */ 
 #include <string.h>
-#include <stdio.h>
 
 #include "config.h"
 #include "io.h"
@@ -55,7 +54,6 @@ uint8_t i2cWriteByte(uint8_t i2cAddr, uint8_t data)
 uint8_t i2cWriteRegister(uint8_t i2cAddr, uint8_t regAddr, uint8_t data)
 {
     uint8_t buf[2] = { regAddr, data };
-    //printf("Writing %d:0x%02x\n", regAddr, data);
     i2c_write_blocking(i2c_default, i2cAddr, buf, 2, false);
 
     return 0;
@@ -67,11 +65,9 @@ uint8_t i2cWriteRegister(uint8_t i2cAddr, uint8_t regAddr, uint8_t data)
 // Second byte written contains the remaining 8 bits of the data
 uint8_t i2cWriteRegister9Bit(uint8_t i2cAddr, uint8_t regAddr, uint16_t data)
 {
-    printf("Set reg 0x%02x to 0x%04x\n", regAddr, data);
     uint8_t buf[2];
     buf[0] = (regAddr << 1) | (data>>8);
     buf[1] = data & 0xFF;
-    printf("buf[0] = %02x buf[1] = %02x\n", buf[0], buf[1]);
     i2c_write_blocking(i2c_default, i2cAddr, buf, 2, false);
 
     return 0;
@@ -81,7 +77,6 @@ uint8_t i2cReadRegister(uint8_t i2cAddr, uint8_t regAddr, uint8_t *data)
 {
     i2c_write_blocking(i2c_default, i2cAddr, &regAddr, 1, true);
     i2c_read_blocking(i2c_default, i2cAddr, data, 1, false);
-    //printf("Read %d:0x%02x\n", regAddr, *data);
 
     return 0;
 }

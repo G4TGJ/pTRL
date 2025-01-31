@@ -4,7 +4,6 @@
  * Created: 14/01/2025
  * Author : Richard Tomlinson G4TGJ
  */ 
-#include <stdio.h>
 
 #include "config.h"
 #include "i2c.h"
@@ -25,7 +24,6 @@ uint8_t WM8960GetRightADCVolume( void )
 
 void WM8960SetLeftADCVolume( uint8_t vol )
 {
-    printf("Set left vol to 0x%02x\n", vol);
     leftADCVolume = vol;
     i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_LEFT_ADC_VOLUME,  (uint16_t)0x000 | leftADCVolume);
     i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_LEFT_ADC_VOLUME,  (uint16_t)0x100 | leftADCVolume);
@@ -33,7 +31,6 @@ void WM8960SetLeftADCVolume( uint8_t vol )
 
 void WM8960SetRightADCVolume( uint8_t vol )
 {
-    printf("Set right vol to 0x%02x\n", vol);
     rightADCVolume = vol;
     i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_RIGHT_ADC_VOLUME, (uint16_t)0x000 | rightADCVolume);
     i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_RIGHT_ADC_VOLUME, (uint16_t)0x100 | rightADCVolume);
