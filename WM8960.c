@@ -12,6 +12,9 @@
 // Keep track of ADC volumes
 static uint8_t leftADCVolume, rightADCVolume;
 
+// Keep track of input boost gain
+static uint8_t inputBoostGain;
+
 uint8_t WM8960GetLeftADCVolume( void )
 {
     return leftADCVolume;
@@ -36,6 +39,35 @@ void WM8960SetRightADCVolume( uint8_t vol )
     i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_RIGHT_ADC_VOLUME, (uint16_t)0x100 | rightADCVolume);
 }
 
+// Set the input boost gain for both L and R input channels (LINPUT3 and RINPUT3)
+void WM8960SetInputBoostGain( uint8_t gain )
+{
+    i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_INPUT_BOOST_MIXER_1, gain << 4);
+    i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_INPUT_BOOST_MIXER_2, gain << 4);
+
+    // Remember the gain
+    inputBoostGain = gain;
+}
+
+uint8_t WM8960GetInputBoostGain( void )
+{
+    return inputBoostGain;
+}
+
+void WM8960MuteInput()
+{
+    // Remember the gain so that we can unmute to the
+    // same gain
+    uint8_t gain = inputBoostGain;
+    WM8960SetInputBoostGain(0);
+    inputBoostGain = gain;
+}
+
+void WM8960UnmuteInput()
+{
+    WM8960SetInputBoostGain(inputBoostGain);
+}
+
 void WM8960Init( void )
 {
     // Initialise I2C first
@@ -54,9 +86,8 @@ void WM8960Init( void )
     // Enable left and right boost mixers
     i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_PWR_MGMT_1, 0xFC);
 
-    // Enable LINPUT3 and RINPUT3 with 6dB gain
-    i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_INPUT_BOOST_MIXER_1, 0x70);
-    i2cWriteRegister9Bit(WM8960_ADDR, WM8960_REG_INPUT_BOOST_MIXER_2, 0x70);
+    // Set the input boost gain
+    WM8960SetInputBoostGain( DEFAULT_INPUT_BOOST_GAIN );
 
     // Set left and right ADC volume
     WM8960SetLeftADCVolume( DEFAULT_LEFT_ADC_VOLUME );

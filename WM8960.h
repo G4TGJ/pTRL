@@ -326,5 +326,9 @@ void WM8960SetLeftADCVolume( uint8_t vol );
 void WM8960SetRightADCVolume( uint8_t vol );
 uint8_t WM8960GetLeftADCVolume( void );
 uint8_t WM8960GetRightADCVolume( void );
+void WM8960SetInputBoostGain( uint8_t gain );
+uint8_t WM8960GetInputBoostGain( void );
+void WM8960MuteInput();
+void WM8960UnmuteInput();
 
 #endif
